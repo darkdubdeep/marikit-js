@@ -12,8 +12,15 @@
 </template>
 
 <script>
+
+
 export default {
-  data: () => ({})
+  data: () => ({
+
+  }),
+  mounted: function(){
+    this.$store.dispatch('getAllProducts');
+  }
 };
 </script>
 
