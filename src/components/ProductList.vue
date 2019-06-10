@@ -7,7 +7,6 @@
     <v-flex>
       <h1>Product list</h1>
     </v-flex>
-
     </v-layout>
   </v-container>
 </template>
