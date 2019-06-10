@@ -12,7 +12,7 @@ const getters = {};
 // actions
 const actions = {
   getAllProducts({ commit }) {
-    shop.getProducts(products => {
+    shop.getProducts((products, productsNames) => {
       commit('setProducts', products);
     });
   }
@@ -22,8 +22,6 @@ const actions = {
 const mutations = {
   setProducts(state, products) {
     state.all = products;
-    console.log('state all');
-    console.log(state.all);
   }
 };
 
