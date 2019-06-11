@@ -14,15 +14,17 @@ const actions = {
   getAllProducts({ commit }) {
     shop.getProducts((products, productsNames) => {
       const productsData = products.Value.Goods;
+      let productsByCategories = [];
+      console.log(productsData);
       let goods;
       for (let item in productsNames) {
-        console.log('outer');
-        console.log(productsNames[item]);
+        productsNames[item].categoryId = item;
+        productsByCategories.push(productsNames[item]);
         for (let innerItem in productsNames[item]) {
-          console.log('inner');
-          console.log(productsNames[item][innerItem]);
+          // console.log(productsNames[item][innerItem]);
         }
       }
+      console.log(productsByCategories);
       commit('setProducts', goods);
     });
   }
