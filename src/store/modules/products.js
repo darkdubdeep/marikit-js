@@ -15,16 +15,21 @@ const actions = {
     shop.getProducts((products, productsNames) => {
       const productsData = products.Value.Goods;
       let productsByCategories = [];
-      console.log(productsData);
+
+      let extractedProducts = [];
+
       let goods;
       for (let item in productsNames) {
         productsNames[item].categoryId = item;
         productsByCategories.push(productsNames[item]);
-        for (let innerItem in productsNames[item]) {
-          // console.log(productsNames[item][innerItem]);
-        }
       }
+      // for (let item of extractedProducts) {
+      //   item['B'] = [];
+      // }
+      console.log(productsData);
       console.log(productsByCategories);
+      console.log(extractedProducts);
+
       commit('setProducts', goods);
     });
   }
