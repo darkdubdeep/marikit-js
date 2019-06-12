@@ -16,21 +16,45 @@ const actions = {
       const productsData = products.Value.Goods;
       let productsByCategories = [];
 
-      let extractedProducts = [];
-
       let goods;
       for (let item in productsNames) {
         productsNames[item].categoryId = item;
         productsByCategories.push(productsNames[item]);
       }
-      // for (let item of extractedProducts) {
-      //   item['B'] = [];
-      // }
+      let extractedProducts = JSON.parse(JSON.stringify(productsByCategories));
+
+      for (let item of extractedProducts) {
+        item['B'] = [];
+      }
+
+      for (let item of productsData) {
+        for (let item2 of productsByCategories) {
+          if (item.G == item2.categoryId) {
+            for (let item3 in item2.B) {
+              if (item.T == item3) {
+                for (let item4 of extractedProducts) {
+                  // примерно на этом уровне, мне уже самому стало немного страшно
+                  if (item4.categoryId == item2.categoryId) {
+                    let obj = {
+                      name: item2.B[item3].N,
+                      id: item3,
+                      price: item.C,
+                      quantity: item.P
+                    };
+                    item4.B.push(obj);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
       console.log(productsData);
       console.log(productsByCategories);
       console.log(extractedProducts);
 
-      commit('setProducts', goods);
+      commit('setProducts', extractedProducts);
     });
   }
 };
