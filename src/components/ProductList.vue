@@ -7,12 +7,7 @@
             <v-toolbar-title>Товары</v-toolbar-title>
           </v-toolbar>
           <v-list>
-            <v-list-group
-              v-for="item in products"
-              :key="item.categoryId"
-              v-model="item.active"
-              no-action
-            >
+            <v-list-group v-for="item in products" :key="item.categoryId" no-action>
               <template v-slot:activator>
                 <v-list-tile>
                   <v-list-tile-content>
@@ -52,7 +47,8 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   data: () => ({
-    active: true
+    active: true,
+    panel: [false, true, true, true, false, true]
   }),
   computed: mapState({
     products: state => state.products.all,
