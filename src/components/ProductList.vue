@@ -47,8 +47,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   data: () => ({
-    active: true,
-    panel: [false, true, true, true, false, true]
+    active: true
   }),
   computed: mapState({
     products: state => state.products.all,
