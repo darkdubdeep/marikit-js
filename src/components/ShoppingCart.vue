@@ -1,20 +1,14 @@
 <template>
   <v-container>
     <v-layout text-xs-center justify-center wrap>
-      <v-flex xs12 sm11>
+      <v-flex xs12 sm9>
         <v-card>
-          <v-toolbar color="teal" dark>
-            <v-toolbar-title>Товары</v-toolbar-title>
+          <v-toolbar color="teal lighten-2" dark>
+            <v-toolbar-title>Корзина</v-toolbar-title>
           </v-toolbar>
           <v-list>
-            <v-list-group v-for="item in products" :key="item.categoryId" no-action>
-              <template v-slot:activator>
-                <v-list-tile>
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ item.G }}</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </template>
+            {{products}}
+            <div v-for="item in products" :key="item.categoryId" no-action>
               <v-list-tile
                 v-for="subItem in item.B"
                 :key="subItem.id"
@@ -28,13 +22,16 @@
                     <v-list-tile-action-text
                       class="pr-3 pb-2 title font-weight-bold"
                     >{{ subItem.price | convertToRubles(currency) }} р.</v-list-tile-action-text>
-                    <v-btn icon ripple @click="addProductToCart(subItem)">
+                    <v-list-tile-action-text
+                      class="pr-3 pb-2 title font-weight-bold"
+                    >{{ subItem.quantity }} р.</v-list-tile-action-text>
+                    <v-btn icon ripple>
                       <v-icon color="teal lighten-2">shopping_cart</v-icon>
                     </v-btn>
                   </v-layout>
                 </v-list-tile-action>
               </v-list-tile>
-            </v-list-group>
+            </div>
           </v-list>
         </v-card>
       </v-flex>
@@ -43,24 +40,22 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import ShoppingCart from "./ShoppingCart";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
-  components: {
-    ShoppingCart
-  },
-  name: "ProductList",
+  name: "ShoppingCart",
   data: () => ({}),
-  computed: mapState({
-    products: state => state.products.all,
-    currency: state => state.products.currency,
-    currencyIncreased: state => state.products.currencyIncreased
-  }),
-  mounted: function() {
-    this.$store.dispatch("getAllProducts");
+  computed: {
+    ...mapState({
+      cartProducts: state => state.cart.items,
+      currency: state => state.products.currency
+    }),
+    ...mapGetters("cart", {
+      products: "cartProducts",
+      total: "cartTotalPrice"
+    })
   },
-  methods: mapActions("cart", ["addProductToCart"]),
+  mounted: function() {},
   filters: {
     convertToRubles: (value, currency) => {
       return (value * currency).toFixed(2);
@@ -72,9 +67,5 @@ export default {
 <style>
 .v-list__group__items--no-action .v-list__tile {
   padding-left: 35px;
-}
-
-.increased-price {
-  background: #ffe0b2;
 }
 </style>

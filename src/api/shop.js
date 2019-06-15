@@ -3,11 +3,11 @@
  */
 
 import { productNames } from '../../names';
-let _products = require('../../data.json');
+let products = require('../../data.json');
 
 export default {
   getProducts(cb) {
-    cb(_products, productNames);
-    setInterval(() => cb(_products, productNames), 15000);
+    cb(products, productNames);
+    setInterval(() => cb(products, productNames), 15000);
   }
 };

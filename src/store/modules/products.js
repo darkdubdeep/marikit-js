@@ -73,6 +73,7 @@ const mutations = {
       state.currencyIncreased = false;
     }
     state.currency = newCurrency;
+    console.log('updated');
   }
 };
 

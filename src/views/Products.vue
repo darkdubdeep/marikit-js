@@ -1,13 +1,18 @@
 <template>
-  <ProductList />
+  <v-container fluid>
+    <ShoppingCart/>
+    <ProductList/>
+  </v-container>
 </template>
 
 <script>
-import ProductList from '../components/ProductList';
+import ProductList from "../components/ProductList";
+import ShoppingCart from "../components/ShoppingCart";
 
 export default {
   components: {
-    ProductList
+    ProductList,
+    ShoppingCart
   }
 };
 </script>

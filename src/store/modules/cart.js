@@ -9,9 +9,13 @@ const state = {
 const getters = {
   cartProducts: (state, getters, rootState) => {
     return state.items.map(({ id, quantity }) => {
-      const product = rootState.products.all.find(product => product.id === id);
+      let product;
+      for (let item of rootState.products.all) {
+        if ((product = item.B.find(innerItem => innerItem.id === id))) break;
+      }
+      console.log(product);
       return {
-        title: product.title,
+        title: product.name,
         price: product.price,
         quantity
       };
@@ -28,20 +32,20 @@ const getters = {
 // actions
 const actions = {
   addProductToCart({ state, commit }, product) {
-    commit('setCheckoutStatus', null);
-    if (product.inventory > 0) {
+    if (product.quantity > 0) {
+      console.log('shit fired');
       const cartItem = state.items.find(item => item.id === product.id);
       if (!cartItem) {
         commit('pushProductToCart', { id: product.id });
       } else {
         commit('incrementItemQuantity', cartItem);
       }
-      // remove 1 item from stock
-      commit(
-        'products/decrementProductInventory',
-        { id: product.id },
-        { root: true }
-      );
+      // // remove 1 item from stock
+      // commit(
+      //   'products/decrementProductInventory',
+      //   { id: product.id },
+      //   { root: true }
+      // );
     }
   }
 };
