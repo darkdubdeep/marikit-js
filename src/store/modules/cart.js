@@ -62,14 +62,14 @@ const mutations = {
   },
   incrementItemQuantity(state, { id, storeQuantity }) {
     const cartItem = state.items.find(item => item.id === id);
-    console.log(cartItem);
     if (cartItem.quantity < storeQuantity) cartItem.quantity++;
   },
   changeItemQuantityByInput(state, payload) {
     const cartItem = state.items.find(item => item.id === payload.id);
-    if (payload.val < cartItem.storeQuantity && payload.val > -1) {
+    if (payload.val <= cartItem.storeQuantity && payload.val > -1) {
       cartItem.quantity = payload.val;
     } else {
+      cartItem.quantity = 0;
     }
   },
   setInputError(state, payload) {

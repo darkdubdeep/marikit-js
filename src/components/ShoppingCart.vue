@@ -34,6 +34,7 @@
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
+          <h2 class="text-right" v-if="products.length">{{total | convertToRubles(currency)}} р.</h2>
         </v-card>
       </v-flex>
     </v-layout>
@@ -83,5 +84,10 @@ export default {
 }
 .text-red {
   color: #ff5252;
+}
+.text-right {
+  text-align: right;
+  padding-right: 20px;
+  padding-bottom: 10px;
 }
 </style>
