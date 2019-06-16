@@ -36,7 +36,6 @@ const actions = {
   addProductToCart({ state, commit }, product) {
     if (product.quantity > 0) {
       const cartItem = state.items.find(item => item.id === product.id);
-      console.log(cartItem);
       if (!cartItem) {
         commit('pushProductToCart', {
           id: product.id,

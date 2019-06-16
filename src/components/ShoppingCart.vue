@@ -22,6 +22,7 @@
                       :value="item.quantity"
                       @input="updateQuantity($event, item.id)"
                       :error="item.inputError ? true : false"
+                      class="quantity-input"
                     ></v-text-field>
                   </v-list-tile-action-text>
                   <v-list-tile-action-text
@@ -92,5 +93,8 @@ export default {
   text-align: right;
   padding-right: 20px;
   padding-bottom: 10px;
+}
+.quantity-input {
+  width: 70px;
 }
 </style>
