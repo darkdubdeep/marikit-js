@@ -81,12 +81,12 @@ const mutations = {
     const cartItem = state.items.find(item => item.id === payload);
     cartItem.inputError = false;
   },
+  deleteItemFromCart(state, payload) {
+    const productIndex = state.items.findIndex(item => item.id == payload);
+    state.items.splice(productIndex, 1);
+  },
   setCartItems(state, { items }) {
     state.items = items;
-  },
-
-  setCheckoutStatus(state, status) {
-    state.checkoutStatus = status;
   }
 };
 

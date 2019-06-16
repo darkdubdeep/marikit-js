@@ -28,7 +28,7 @@
                     class="pr-1 pb-2 title font-weight-bold min-width"
                   >{{ item.price | convertToRubles(currency) }} р.</v-list-tile-action-text>
                   <v-btn icon ripple>
-                    <v-icon color="teal lighten-2">delete</v-icon>
+                    <v-icon color="teal lighten-2" @click="deleteItemFromCart(item)">delete</v-icon>
                   </v-btn>
                 </v-layout>
               </v-list-tile-action>
@@ -65,6 +65,9 @@ export default {
         this.$store.commit("cart/removeInputError", id);
         this.$store.commit("cart/changeItemQuantityByInput", payload);
       }
+    },
+    deleteItemFromCart(item) {
+      this.$store.commit("cart/deleteItemFromCart", item.id);
     }
   },
   filters: {
