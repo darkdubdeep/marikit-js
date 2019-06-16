@@ -8,7 +8,7 @@ const state = {
 // getters
 const getters = {
   cartProducts: (state, getters, rootState) => {
-    return state.items.map(({ id, quantity, inputError }) => {
+    return state.items.map(({ id, quantity, inputError, storeQuantity }) => {
       let product;
       for (let item of rootState.products.all) {
         if ((product = item.B.find(innerItem => innerItem.id === id))) break;
@@ -17,6 +17,7 @@ const getters = {
         title: product.name,
         price: product.price,
         id: product.id,
+        storeQuantity: product.quantity,
         inputError,
         quantity
       };
@@ -34,41 +35,38 @@ const getters = {
 const actions = {
   addProductToCart({ state, commit }, product) {
     if (product.quantity > 0) {
-      console.log('shit fired');
       const cartItem = state.items.find(item => item.id === product.id);
+      console.log(cartItem);
       if (!cartItem) {
         commit('pushProductToCart', {
           id: product.id,
-          inputError: product.inputError
+          inputError: product.inputError,
+          storeQuantity: product.quantity
         });
       } else {
         commit('incrementItemQuantity', cartItem);
       }
-      // // remove 1 item from stock
-      // commit(
-      //   'products/decrementProductInventory',
-      //   { id: product.id },
-      //   { root: true }
-      // );
     }
   }
 };
 
 // mutations
 const mutations = {
-  pushProductToCart(state, { id, inputError }) {
+  pushProductToCart(state, { id, inputError, storeQuantity }) {
     state.items.push({
       id,
       quantity: 1,
-      inputError
+      inputError,
+      storeQuantity
     });
   },
-
-  incrementItemQuantity(state, { id }) {
+  incrementItemQuantity(state, { id, storeQuantity }) {
     const cartItem = state.items.find(item => item.id === id);
-    cartItem.quantity++;
+    console.log(storeQuantity);
+    if (cartItem.quantity < storeQuantity) cartItem.quantity++;
   },
-  incrementItemQuantityByInput(state, payload) {
+  changeItemQuantityByInput(state, payload) {
+    console.log(payload);
     const cartItem = state.items.find(item => item.id === payload.id);
     cartItem.quantity = payload.val;
   },

@@ -15,7 +15,7 @@
               <v-list-tile-action>
                 <v-layout row align-center>
                   <v-list-tile-action-text class="pr-3 pb-0 font-weight-black">
-                    <h3 class="text-red" v-if="item.quantity < 10">Количество ограниченно</h3>
+                    <h3 class="text-red" v-if="item.storeQuantity < 10">Количество ограниченно</h3>
                   </v-list-tile-action-text>
                   <v-list-tile-action-text>
                     <v-text-field
@@ -62,7 +62,7 @@ export default {
       } else {
         const payload = { val, id };
         this.$store.commit("cart/removeInputError", id);
-        this.$store.commit("cart/incrementItemQuantityByInput", payload);
+        this.$store.commit("cart/changeItemQuantityByInput", payload);
       }
     }
   },
