@@ -68,8 +68,9 @@ const mutations = {
     const cartItem = state.items.find(item => item.id === payload.id);
     if (payload.val <= cartItem.storeQuantity && payload.val > -1) {
       cartItem.quantity = payload.val;
+      cartItem.inputError = false;
     } else {
-      cartItem.quantity = 0;
+      cartItem.inputError = true;
     }
   },
   setInputError(state, payload) {
