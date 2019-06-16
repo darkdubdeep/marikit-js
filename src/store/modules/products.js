@@ -42,7 +42,8 @@ const actions = {
                       name: item2.B[item3].N,
                       id: item3,
                       price: item.C,
-                      quantity: item.P
+                      quantity: item.P,
+                      inputError: false
                     };
                     item4.B.push(obj);
                   }
@@ -73,7 +74,6 @@ const mutations = {
       state.currencyIncreased = false;
     }
     state.currency = newCurrency;
-    console.log('updated');
   }
 };
 

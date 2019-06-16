@@ -7,17 +7,25 @@
             <v-toolbar-title>Корзина</v-toolbar-title>
           </v-toolbar>
           <v-list>
+            <h2 v-if="!products.length">В корзине нет товаров</h2>
             <v-list-tile v-for="item in products" :key="item.id">
               <v-list-tile-content>
                 <v-list-tile-title>{{item.title}}</v-list-tile-title>
               </v-list-tile-content>
               <v-list-tile-action>
-                <v-layout row wrap align-center>
+                <v-layout row align-center>
+                  <v-list-tile-action-text class="pr-3 pb-0 font-weight-black">
+                    <h3 class="text-red" v-if="item.quantity < 10">Количество ограниченно</h3>
+                  </v-list-tile-action-text>
+                  <v-list-tile-action-text>
+                    <v-text-field
+                      :value="item.quantity"
+                      @input="updateQuantity($event, item.id)"
+                      :error="item.inputError ? true : false"
+                    ></v-text-field>
+                  </v-list-tile-action-text>
                   <v-list-tile-action-text
-                    class="pr-3 pb-2 title font-weight-bold"
-                  >{{ item.quantity }}</v-list-tile-action-text>
-                  <v-list-tile-action-text
-                    class="pr-3 pb-2 title font-weight-bold"
+                    class="pr-1 pb-2 title font-weight-bold min-width"
                   >{{ item.price | convertToRubles(currency) }} р.</v-list-tile-action-text>
                   <v-btn icon ripple>
                     <v-icon color="teal lighten-2">delete</v-icon>
@@ -40,7 +48,6 @@ export default {
   data: () => ({}),
   computed: {
     ...mapState({
-      cartProducts: state => state.cart.items,
       currency: state => state.products.currency
     }),
     ...mapGetters("cart", {
@@ -48,7 +55,17 @@ export default {
       total: "cartTotalPrice"
     })
   },
-  mounted: function() {},
+  methods: {
+    updateQuantity(val, id) {
+      if (!/^\d+$/.test(val)) {
+        this.$store.commit("cart/setInputError", id);
+      } else {
+        const payload = { val, id };
+        this.$store.commit("cart/removeInputError", id);
+        this.$store.commit("cart/incrementItemQuantityByInput", payload);
+      }
+    }
+  },
   filters: {
     convertToRubles: (value, currency) => {
       return (value * currency).toFixed(2);
@@ -60,5 +77,11 @@ export default {
 <style>
 .v-list__group__items--no-action .v-list__tile {
   padding-left: 35px;
+}
+.min-width {
+  min-width: 150px;
+}
+.text-red {
+  color: #ff5252;
 }
 </style>
